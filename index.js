@@ -1,6 +1,8 @@
 // TASK: import helper functions from utils
-// TASK: import initialData
+import { getTasks,createNewTask,patchTask,putTask,deleteTask,} from "/utils/taskFunctions.js";
 
+// TASK: import initialData
+import { initialData } from "./initialData.js";
 
 /*************************************************************************************************************************************************
  * FIX BUGS!!!
@@ -8,19 +10,46 @@
 
 // Function checks if local storage already has data, if not it loads initialData to localStorage
 function initializeData() {
-  if (!localStorage.getItem('tasks')) {
-    localStorage.setItem('tasks', JSON.stringify(initialData)); 
-    localStorage.setItem('showSideBar', 'true')
+  if (!localStorage.getItem("tasks")) {
+    localStorage.setItem("tasks", JSON.stringify(initialData));
+    localStorage.setItem("showSideBar", "true");
   } else {
-    console.log('Data already exists in localStorage');
+    console.log("Data already exists in local storage")
   }
 }
 
 // TASK: Get elements from the DOM
+// TASK: Get elements from the DOM Define DOM elements used in the script
 const elements = {
-
-}
-
+  sideBar: document.getElementById("side-bar-div"), //Represents the sidebar off the application
+  boardsNavLinksDiv: document.getElementById("boards-nav-links-div"), // Div containing  the navigation boards
+  themeSwitch: document.getElementById("switch"), //Represents the theme switch element for dark or light mode
+  hideSideBarBtn: document.getElementById("hide-side-bar-btn"), //Hides the side bar button
+  showSideBarBtn: document.getElementById("show-side-bar-btn"), //Shows the side bar button
+  headerBoardName: document.getElementById("header-board-name"), //Updates board name displayed on header
+  dropdownBtn: document.getElementById("dropdownBtn"), //Button to show drop down options
+  addNewTaskBtn: document.getElementById("add-new-task-btn"), // Button to add new tasks
+  editBoardBtn: document.getElementById("edit-board-btn"), // Opens board editing buttons
+  deleteBoardBtn: document.getElementById("deleteBoardBtn"), // Button to delete tasks
+  tasksContainers: document.querySelectorAll(".tasks-container"), // Main container with all the tasks
+  columnDivs: document.querySelectorAll(".column-div"), // Updates the task lists with each column
+  newTaskModalWindow: document.getElementById("new-task-modal-window"), // Adds a new modal meu
+  editTaskModalWindow: document.querySelector(".edit-task-modal-window"), // toggles the task modal when editing tasks
+  modalWindow: document.querySelector(".modal-window"), // toggles the visibility of the task modal when editing tasks
+  titleInput: document.getElementById("title-input"), // Main title input for your tasks
+  descInput: document.getElementById("desc-input"), // Field to in put description of a task
+  selectStatus: document.getElementById("select-status"), // Element to selects status of a task
+  createTaskBtn: document.getElementById("create-task-btn"), // Button to add a task
+  cancelAddTaskBtn: document.getElementById("cancel-add-task-btn"), // Button to cancel adding a task
+  editTaskForm: document.getElementById("edit-task-form"), // form for editing existing tasks
+  editTaskTitleInput: document.getElementById("edit-task-title-input"), // field to edit the task title
+  editTaskDescInput: document.getElementById("edit-task-desc-input"), //input field to edit the description of a task
+  editSelectStatus: document.getElementById("edit-select-status"), //element to to edit the status of an existing task
+  saveTaskChangesBtn: document.getElementById("save-task-changes-btn"), //button to save changes 
+  cancelEditBtn: document.getElementById("cancel-edit-btn"), //button to cancel current task operation
+  deleteTaskBtn: document.getElementById("delete-task-btn"), //button to delete existing task
+  filterDiv: document.getElementById("filterDiv"),
+};
 let activeBoard = ""
 
 // Extracts unique board names from tasks
